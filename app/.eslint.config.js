@@ -1,12 +1,9 @@
-{
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
+export default [
+  {
+    files: ['**/*.js'],
+    rules: {
+      semi: ['error', 'always'],
+      quotes: ['error', 'single'],
+    },
   },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": 12
-  },
-  "rules": {}
-}
+];
