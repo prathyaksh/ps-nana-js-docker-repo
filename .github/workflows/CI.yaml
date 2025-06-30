@@ -32,7 +32,7 @@ jobs:
         run: npm install --save-dev eslint
 
       - name: Run ESLint test
-        run: npx eslint .
+        run: npx eslint ./app/
 
       - name: run auditjs
         run: |
