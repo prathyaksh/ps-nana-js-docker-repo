@@ -28,11 +28,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: ESLint installation
-        run: npm init @eslint/config@latest
+      - name: Install ESLint
+        run: npm install --save-dev eslint
 
       - name: Run ESLint test
-        run: npx eslint yourfile.js
+        run: npx eslint server.js
 
       - name: run auditjs
         run: |
@@ -46,8 +46,8 @@ jobs:
       - name: Scan Docker image with Trivy
         run: |
           docker build -t ps-nana-js:latest .
-          trivy image --exit-code=0 --severity HIGH,CRITICAL java-login-app:latest
-          working-directory: techworld-js-docker-demo-app/
+          trivy image --exit-code=0 --severity HIGH,CRITICAL ps-nana-js:latest
+          working-directory: app
 
       - name: login to Docker Hub
         uses: docker/login-action@v3
@@ -57,5 +57,5 @@ jobs:
 
       - name: push docker image
         run: |
-          docker tag java-login-app:latest ${{ secrets.DOCKERHUB_USERNAME }}/java-login-app:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/java-login-app:latest
+          docker tag ps-nana-js:latest ${{ secrets.DOCKERHUB_USERNAME }}/ps-nana-js:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ps-nana-js:latest
