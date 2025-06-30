@@ -5,37 +5,32 @@ let MongoClient = require('mongodb').MongoClient;
 let bodyParser = require('body-parser');
 let app = express();
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
-  });
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 app.get('/profile-picture', function (req, res) {
   let img = fs.readFileSync(path.join(__dirname, "images/profile-1.jpg"));
-  res.writeHead(200, {'Content-Type': 'image/jpg' });
+  res.writeHead(200, { 'Content-Type': 'image/jpg' });
   res.end(img, 'binary');
 });
 
-// use when starting application locally
+// 🆕 CHANGED: Support dynamic MongoDB URL
+// Prefer environment variable (from Docker), fallback to localhost (for local dev)
 let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
+let mongoUrl = process.env.MONGO_URL || mongoUrlLocal;
 
-// use when starting application as docker container
-let mongoUrlDocker = "mongodb://admin:password@mongodb";
-
-// pass these options to mongo client connect request to avoid DeprecationWarning for current Server Discovery and Monitoring engine
 let mongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-
-// "user-account" in demo with docker. "my-db" in demo with docker-compose
 let databaseName = "my-db";
 
 app.post('/update-profile', function (req, res) {
   let userObj = req.body;
 
-  MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+  // 🆕 CHANGED: Use dynamic Mongo URL
+  MongoClient.connect(mongoUrl, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
@@ -44,20 +39,22 @@ app.post('/update-profile', function (req, res) {
     let myquery = { userid: 1 };
     let newvalues = { $set: userObj };
 
-    db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
+    db.collection("users").updateOne(myquery, newvalues, { upsert: true }, function (err, res) {
       if (err) throw err;
       client.close();
     });
 
   });
+
   // Send response
   res.send(userObj);
 });
 
 app.get('/get-profile', function (req, res) {
   let response = {};
-  // Connect to the db
-  MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+
+  // 🆕 CHANGED: Use dynamic Mongo URL
+  MongoClient.connect(mongoUrl, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
@@ -69,7 +66,6 @@ app.get('/get-profile', function (req, res) {
       response = result;
       client.close();
 
-      // Send response
       res.send(response ? response : {});
     });
   });
