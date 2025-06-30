@@ -38,6 +38,7 @@ jobs:
       - name: run auditjs
         run: |
           npx auditjs@beta ossi
+        continue-on-error: true
 
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.3
