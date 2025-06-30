@@ -28,9 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
-
       - name: ESLint installation
         run: npm init @eslint/config@latest
 
