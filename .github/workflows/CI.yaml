@@ -48,9 +48,9 @@ jobs:
 
       - name: Scan Docker image with Trivy
         run: |
-          docker build -t java-login-app:latest .
+          docker build -t ps-nana-js:latest .
           trivy image --exit-code=0 --severity HIGH,CRITICAL java-login-app:latest
-          working-directory: DevOps-Project-01/Java-Login-App
+          working-directory: techworld-js-docker-demo-app/
 
       - name: login to Docker Hub
         uses: docker/login-action@v3
