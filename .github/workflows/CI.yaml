@@ -15,7 +15,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [14, 16, 18]
+        node-version: [18]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
         run: npm install --save-dev eslint
 
       - name: Run ESLint test
-        run: npx eslint server.js
+        run: npx eslint .
 
       - name: run auditjs
         run: |
