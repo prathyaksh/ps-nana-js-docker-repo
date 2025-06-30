@@ -9,9 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: techworld-js-docker-demo-app
+    
     strategy:
       matrix:
         node-version: [14, 16, 18]
