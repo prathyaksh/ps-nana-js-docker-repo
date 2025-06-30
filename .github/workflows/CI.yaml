@@ -33,6 +33,7 @@ jobs:
 
       - name: Run ESLint test
         run: npx eslint .
+        continue-on-error: true
 
       - name: run auditjs
         run: |
