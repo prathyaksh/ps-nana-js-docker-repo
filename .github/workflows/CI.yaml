@@ -6,7 +6,7 @@ on:
     branches:
       - master
     paths:
-      - ps-nana-js-docker-repo/techworld-js-docker-demo-app/**
+      - techworld-js-docker-demo-app/**
 
 jobs:
   build:
