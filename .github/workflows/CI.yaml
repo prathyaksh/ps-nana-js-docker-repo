@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ps-nana-js-docker-repo/techworld-js-docker-demo-app/
+        working-directory: ps-nana-js-docker-repo/
     strategy:
       matrix:
         node-version: [14, 16, 18]
