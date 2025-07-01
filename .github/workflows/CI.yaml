@@ -46,7 +46,7 @@ jobs:
           version: v0.61.0
 
       - name: Scan Docker image with Trivy
-        working-directory: ps-nana-js-docker-repo/techworld-js-docker-demo-app
+        working-directory: techworld-js-docker-demo-app/
         run: |
           docker build -t ps-nana-js:latest .
           trivy image --exit-code=0 --severity HIGH,CRITICAL ps-nana-js:latest
